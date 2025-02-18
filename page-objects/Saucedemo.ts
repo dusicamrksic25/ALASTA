@@ -24,6 +24,9 @@ export class SaucedemoPage extends Helper {
   private Continue: Locator;
   private Finish: Locator;
   private SuccessMessage: Locator;
+  private BurgerMenu: Locator;
+  private LogoutSidebar: Locator;
+  private Logo: Locator;
 
 
 
@@ -49,6 +52,9 @@ export class SaucedemoPage extends Helper {
     this.Continue=this.page.locator('#continue');
     this.Finish=this.page.locator('#finish');
     this.SuccessMessage=this.page.locator('.complete-header');
+    this.BurgerMenu=this.page.locator('#react-burger-menu-btn');
+    this.LogoutSidebar=this.page.locator('#logout_sidebar_link');
+    this.Logo=this.page.locator('.login_logo');
   }
 
   async navigateToHomePage(): Promise<void> {
@@ -171,4 +177,17 @@ async VerifyLoginFails(): Promise<void> {
 const errorMessage = await this.page.locator('.error-message-container');
   await expect(errorMessage).toContainText('Username and password do not match any user in this service');
 }
+async Menu(): Promise<void> {
+  await this.BurgerMenu.click();
+  
+}
+async LogOut(): Promise<void> {
+  await this.LogoutSidebar.click();
+  
+}
+async VerifyLoginPage(): Promise<void> {
+  await expect(this.page).toHaveURL('https://www.saucedemo.com/');
+  await expect(this.page.locator('.login_logo')).toBeVisible();
+}
+
 }
